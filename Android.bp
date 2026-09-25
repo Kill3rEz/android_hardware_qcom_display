@@ -110,6 +110,17 @@ qtidisplay_cc_defaults {
         "libcutils",
         "libutils",
     ],
+    // PenguinOS/dodge: the display/kernel headers are normally pulled in by the
+    // soong_config-gated "default" block of qtidisplay_defaults, but the
+    // qtidisplay config namespace isn't set for this device, so nothing was
+    // applied and modules (e.g. libsdmdal) couldn't find <display/drm/sde_drm.h>.
+    // Add them unconditionally here (qti_display_kernel_headers is the genrule
+    // from kernel/oneplus/sm8750-modules that produces the display uapi headers).
+    header_libs: [
+        "display_headers",
+        "qti_kernel_headers",
+        "qti_display_kernel_headers",
+    ],
     tidy: true,
     tidy_checks: [
         "-*",
